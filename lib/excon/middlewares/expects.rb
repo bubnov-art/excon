@@ -2,7 +2,7 @@ module Excon
   module Middleware
     class Expects < Excon::Middleware::Base
       def response_call(datum)
-        additional_expects = datum[:response][:path].include?('question') && datum[:response][:method] == 'DELETE' ? 404 : 204     
+        additional_expects = datum[:path].include?('question') && datum[:response][:method] == 'DELETE' ? 404 : 204     
         if datum.has_key?(:expects) && ![*datum[:expects],additional_expects].include?(datum[:response][:status])
           raise(
             Excon::Errors.status_error(
